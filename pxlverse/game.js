@@ -22,23 +22,45 @@ const game = new Phaser.Game(config);
 
 let player;
 let cursors;
+let tileSize = 32;
+let worldWidth = 25;
+let worldHeight = 18;
+let world = [];
+let graphics;
+let buildMode = true;
 
 // Preload assets
 function preload() {
     this.load.image('player', 'https://phaser.io/images/sprites/phaser-dude.png');
+
 }
 
 // Create the game world
 function create() {
-    // Add player sprite to the scene
+    //World Array
+    for (let y = 0; y < world.height; y++ ) {
+        world[y] = [];
+        for (let x = 0; x < world.width; x++ ) {
+            world[y][x] = 0;
+        }
+    }
+    // Player Sprite and controls
     player = this.physics.add.sprite(400, 300, 'player');
-
-    // Set player boundaries within the game world
     player.setCollideWorldBounds(true);
-
-    // Create cursor input (arrow keys)
     cursors = this.input.keyboard.createCursorKeys();
+
+    //Graphics Objs to draw the world
+    graphics = this.add.graphics();
+
+
+    //input events for placing/Removing blocks
+    this.input.on('pointerdown', placeOrRemoveBlock,this);
+    //displays instructions for build mode
+    this.add.text(10,10, 'Click to replace/remove blocks. Press B to toggle build mode.')
+    //toggle build mode
+    this.input.keyboard.on('keydown-B', toggleBuildMode);
 }
+
 
 // Update loop for player movement
 function update() {
@@ -57,5 +79,20 @@ function update() {
         player.setVelocityY(-160);
     } else if (cursors.down.isDown) {
         player.setVelocityY(160);
+    }
+
+    drawWorld();
+}
+
+function drawWorld() {
+    graphics.clear(); // Clear previous Drawings
+
+    for (let y = 0; y < worldHeight; y++) {
+        for (let x = 0; x < worldWidth; x++) {
+            if (world[y][x] === 1) {
+            //draw a filled block
+                graphics.fillStyle(0x00800, 1)
+            }
+        }
     }
 }
