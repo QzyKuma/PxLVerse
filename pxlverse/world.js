@@ -42,12 +42,12 @@ export function createWorld(scene) {
 }
 
 // Draw grid lines only (no blocks needed)
-function drawWorld() {
+export function drawWorld() {
     graphics.clear();
-    for (let y = 0; y < worldHeight; y++) {
-        for (let x = 0; x < worldWidth; x++) {
+    for (let y = 0; y < 18; y++) {
+        for (let x = 0; x < 25; x++) {
             graphics.lineStyle(1, 0x000000, 0.3);
-            graphics.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+            graphics.strokeRect(x * 32, y * 32, 32, 32);
         }
     }
 }

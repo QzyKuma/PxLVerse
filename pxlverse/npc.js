@@ -4,3 +4,6 @@ export function preloadNPCAssets(scene) {
     scene.load.image('npc', 'https://labs.phaser.io/assets/sprites/alien.png' );
 }
 
+export function spawnNPCS(scene){
+
+}
