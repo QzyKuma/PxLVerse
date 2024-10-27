@@ -75,43 +75,20 @@ function create() {
 
 
 
-    //
-    // // Initialize the 2D array representing the world grid
-    // for (let y = 0; y < worldHeight; y++) {
-    //     world[y] = [];
-    //     for (let x = 0; x < worldWidth; x++) {
-    //         world[y][x] = 0; // Initially, all tiles are empty (0)
-    //     }
-    // }
-    //
+
     // // Initialize graphics for drawing grid lines
     // graphics = this.add.graphics();
     //
     // // Initialize the blocks static group for physics-enabled blocks
     // blocks = this.physics.add.staticGroup();
-    //
 
-
-    //
-    // // Set up the camera to follow the player
-    // this.cameras.main.startFollow(player);
-    // this.cameras.main.setBounds(0, 0, worldWidth * tileSize, worldHeight * tileSize);
-    //
-    // // Create cursor keys for player movement
-    // cursors = this.input.keyboard.createCursorKeys();
-    //
     // // Input event for placing/removing blocks
     // this.input.on('pointerdown', placeOrRemoveBlock, this);
     //
     // // Display instructions for building mode and block selection
     // this.add.text(10, 10, 'Click to place/remove blocks. Press B to toggle build mode.\nPress 1-4 to select block types.', { fontSize: '16px', fill: '#fff' });
-    //
-    // // Toggle build mode with the "B" key
-    // this.input.keyboard.on('keydown-B', toggleBuildMode);
-    //
 
 
-    //
     // // Set up collider between player and blocks
     // this.physics.add.collider(player, blocks);
     //

@@ -31,11 +31,14 @@ export function createWorld(scene) {
     scene.input.main.setBounds(0,0, 25 * 32, 18 * 32);
 
 
-    scene.input.on('pointerdown')
+    scene.input.on('pointerdown', (pointer) => placeOrRemoveBlock(scene, pointer, blocks));
+    scene.input.keyboard.on('keydown-B', toggleBuildMode)
     scene.input.keyboard.on('keydown-ONE', () => selectBlockType(1)); // Grass
     scene.input.keyboard.on('keydown-TWO', () => selectBlockType(2)); // Dirt
     scene.input.keyboard.on('keydown-THREE', () => selectBlockType(3)); // Stone
     scene.input.keyboard.on('keydown-FOUR', () => selectBlockType(4)); // Water
+
+    return {player, cursors, blocks};
 }
 
 // Draw grid lines only (no blocks needed)
@@ -50,11 +53,8 @@ function drawWorld() {
 }
 
 
-
-
-
 // Place or remove a block when the player clicks
-function placeOrRemoveBlock(pointer) {
+export function placeOrRemoveBlock(pointer) {
     const tileX = Math.floor(pointer.x / tileSize);
     const tileY = Math.floor(pointer.y / tileSize);
 
@@ -62,34 +62,12 @@ function placeOrRemoveBlock(pointer) {
         world[tileY][tileX] = selectedBlockType;
 
         // Create a block in the static group and apply tint color
-        blocks.create(tileX * tileSize + tileSize / 2, tileY * tileSize + tileSize / 2, 'block')
+        blocks.create(tileX * 32 + 16, TileY * 32 + 16, 'block')
             .setTint(blockTypes[selectedBlockType].color)
             .refreshBody();
-
-        // Particle effect for feedback
-        const particles = this.add.particles('particle');
-        const emitter = particles.createEmitter({
-            x: pointer.x,
-            y: pointer.y,
-            speed: { min: -200, max: 200 },
-            lifespan: 300,
-            quantity: 5,
-            scale: { start: 0.5, end: 0 },
-            blendMode: 'ADD'
-        });
-
-        setTimeout(() => {
-            emitter.stop();
-            setTimeout(() => particles.destroy(), 300);
-        }, 300);
-
     } else {
         world[tileY][tileX] = 0;
-
-        // Find and remove block if it exists
-        const blockToRemove = blocks.getChildren().find(block =>
-            block.x === tileX * tileSize + tileSize / 2 && block.y === tileY * tileSize + tileSize / 2
-        );
+        const blockToRemove = blocks.getChildren().find.(block > block.x === tileX * 32 + 16 && block.y === tileY * 32 + 16);
         if (blockToRemove) blocks.remove(blockToRemove, true, true);
     }
 }
