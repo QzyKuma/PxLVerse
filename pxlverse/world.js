@@ -7,17 +7,17 @@
 //     4: { color: 0x1E90FF, type: 'water' }
 // };
 //
-// export let graphics, world = [], selectedBlockType = 1, buildMode = true;
+// export let world = [];
+// let graphics, selectedBlockType = 1, buildMode = true;
 //
 // export function preloadWorldAssets(scene) {
-//     scene.load.image('block', 'https://via.placeholder.com/32'); // Placeholder for blocks
+//     scene.load.image('block', 'https://via.placeholder.com/32');
 //     scene.load.image('player', 'https://labs.phaser.io/assets/sprites/phaser-dude.png');
 // }
 //
 // export function createWorld(scene) {
 //     graphics = scene.add.graphics();
 //
-//     // Initialize world grid
 //     const blocks = scene.physics.add.staticGroup();
 //     for (let y = 0; y < 18; y++) {
 //         world[y] = [];
@@ -29,7 +29,6 @@
 //     scene.cameras.main.startFollow(player);
 //     scene.cameras.main.setBounds(0, 0, 25 * 32, 18 * 32);
 //
-//     // Input for block placement
 //     scene.input.on('pointerdown', (pointer) => placeOrRemoveBlock(scene, pointer, blocks));
 //     scene.input.keyboard.on('keydown-B', toggleBuildMode);
 //     scene.input.keyboard.on('keydown-ONE', () => selectBlockType(1));
@@ -40,7 +39,7 @@
 //     return { player, cursors, blocks };
 // }
 //
-// export function placeOrRemoveBlock(scene, pointer, blocks) {
+// function placeOrRemoveBlock(scene, pointer, blocks) {
 //     const tileX = Math.floor(pointer.x / 32);
 //     const tileY = Math.floor(pointer.y / 32);
 //
@@ -66,10 +65,10 @@
 //     }
 // }
 //
-// export function toggleBuildMode() {
+// function toggleBuildMode() {
 //     buildMode = !buildMode;
 // }
 //
-// export function selectBlockType(type) {
+// function selectBlockType(type) {
 //     selectedBlockType = type;
 // }
