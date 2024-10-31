@@ -1,53 +1,4 @@
 
-// --- Main Game Setup ---
-
-
-class StartScene extends Phaser.Scene {
-    constructor () {
-        super({key: 'StartScene'});
-    }
-
-    preload () {
-        this.load.image('startButton', 'assets/images/startButton.png');
-        this.load.image('backgroundMusic', 'path/to/background_music.mp3');
-    }
-
-    create () {
-        this.backgroundMusic = this.sound.add('backgroundMusic', {loop: true, volume: 0.5 } );
-        this.backgroundMusic.play();
-
-        this.add.text(300, 150, 'Your Game Title', { fontSize: '48px', fill: '#ffffff' });
-
-        const startButton = this.add.image(400, 300, 'startButton').setInteractive();
-        startButton.on('pointerdown', () => {
-
-        });
-    }
-
-
-}
-
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    backgroundColor: '#87CEEB',
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 },
-            debug: true
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
-};
-
-// Initialize the Phaser game
-new Phaser.Game(config);
 
 
 
@@ -65,14 +16,8 @@ let graphics, world = [], selectedBlockType = 1, buildMode = true;
 
 // Preload assets for world and player
 function preloadWorldAssets(scene) {
-    scene.load.image('block', 'https://via.placeholder.com/32');
-    scene.load.image('player', 'https://labs.phaser.io/assets/sprites/phaser-dude.png');
-
-    scene.load.image ('grass', 'https://via.placeholder.com/32?text=Grass');
-    scene.load.image ('dirt', 'https://via.placeholder.com/32?text=Dirt');
-    scene.load.image ('stone', 'https://via.placeholder.com/32?text=Stone');
-    scene.load.image ('water', 'https://via.placeholder.com/32?text=Water');
-    scene.load.image ('background', '/spr_stars02.png');
+    scene.load.image('block', 'Sprites/isometric_pixel_0001.png');
+    scene.load.image('player', 'https://labs.phaser.io/assets/sprites/phaser-dude.png')
 }
 
 // Create the world, player, and handle controls
@@ -107,27 +52,14 @@ function placeOrRemoveBlock(scene, pointer, blocks) {
 
     if (buildMode) {
         world[tileY][tileX] = selectedBlockType;
-
-        const texture = getBlockTexture(selectedBlockType);
-        blocks.create(tileX * 32 + 16, tileY * 32 + 16, texture)
+        blocks.create(tileX * 32 + 16, tileY * 32 + 16, 'block')
+            .setTint(blockTypes[selectedBlockType].color)
             .refreshBody();
     } else {
         world[tileY][tileX] = 0;
         const blockToRemove = blocks.getChildren().find(block => block.x === tileX * 32 + 16 && block.y === tileY * 32 + 16);
         if (blockToRemove) blocks.remove(blockToRemove, true, true);
     }
-}
-
-
-function getBlockTexture(type) {
-    switch(type){
-        case 1: return 'grass';
-        case 2: return 'dirt';
-        case 3: return 'stone';
-        case 4: return 'water';
-        default: return 'grass'; // Default to grass
-    }
-
 }
 
 // Draw the world grid
@@ -197,6 +129,29 @@ function handlePlayerHit(player, npc) {
         });
 }
 
+// --- Main Game Setup ---
+
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: '#87CEEB',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 },
+            debug: true
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+
+// Initialize the Phaser game
+new Phaser.Game(config);
 
 let player, cursors, blocks, npcs, startTime;
 const survivalTime = 60000;
@@ -209,11 +164,7 @@ function preload() {
 
 // Set up the game world, player, NPCs, and survival conditions
 function create() {
-    this.add.tileSprite(400, 300, 800, 600, 'background');
-
     ({ player, cursors, blocks } = createWorld(this));
-
-
     npcs = spawnNPCs(this);
 
     this.physics.add.collider(player, blocks);

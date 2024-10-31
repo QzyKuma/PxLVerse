@@ -6,9 +6,21 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #000; /* Set background color to make the game stand out */
 }
 
 canvas {
   display: block;
+}
+
+body {
+  background-image: url("https://external-preview.redd.it/wU4DwDzO0NyLKg-OINGsr0jz04fmY1McTBesZMeohME.png?width=1080&crop=smart&format=pjpg&auto=webp&s=4dfb880227443fd287f36727c8030ccb29638935");
+}
+
+
+audio {
+  flex: auto;
+  display: flex;
+  align-content: center;
+
+
 }
